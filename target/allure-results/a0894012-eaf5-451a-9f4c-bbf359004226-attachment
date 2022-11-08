@@ -1,0 +1,9 @@
+LoginPages - Erro. Botão [Acessar] não encontrado. Tempo de [5s] para localização do elemento [cessar] expirado.
+ org.openqa.selenium.NoSuchElementException: Unable to locate element: *[name='cessar']
+For documentation on this error, please visit: https://www.seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
+System info: host: 'LAPTOP-RTGBPK5V', ip: '192.168.15.20', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_281'
+Driver info: org.openqa.selenium.firefox.FirefoxDriver
+Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 103.0.2, javascriptEnabled: true, moz:accessibilityChecks: false, moz:buildID: 20220808125904, moz:geckodriverVersion: 0.27.0, moz:headless: false, moz:platformVersion: 10.0, moz:processID: 35256, moz:profile: C:\Users\javan\AppData\Loca..., moz:shutdownTimeout: 60000, moz:useNonSpecCompliantPointerOrigin: false, moz:webdriverClick: true, moz:windowless: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify}
+Session ID: 69af0726-8e51-4ec7-a83a-d15246ba7b13
+*** Element info: {Using=name, value=cessar}
