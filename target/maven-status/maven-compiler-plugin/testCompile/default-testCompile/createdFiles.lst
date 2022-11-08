@@ -1,0 +1,6 @@
+bases\BaseWebDriver.class
+suites\Suite.class
+pages\LoginPages.class
+bases\ReportUtils.class
+bases\Tempo.class
+scripts\RealizaLoginTest.class

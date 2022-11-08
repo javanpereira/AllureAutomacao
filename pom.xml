@@ -1,0 +1,242 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>Allure</groupId>
+  <artifactId>AllureAutomacao</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>ProjetoAllure</name>
+  <description>Testar Projeto Allure</description>
+  
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<!--Allure properties-->
+		<aspectj.version>1.9.4</aspectj.version>
+		<!--Allure properties-->
+	</properties>
+	<dependencies>
+		<!-- Dependências de conexão banco de dados -->
+		<!-- Driver do Banco de dados Postgres para testes batch -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.2.10</version>
+		</dependency>
+		<!-- Driver do Banco de dados DB2 para testes batch -->
+		<dependency>
+			<groupId>com.ibm.db2.jcc</groupId>
+			<artifactId>db2jcc</artifactId>
+			<version>db2jcc4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.4.8.Final</version>
+		</dependency>
+		<!-- Fim conexão banco de dados sds-->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>	
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		    <version>2.8.8</version>
+		</dependency>
+		
+		<!-- Dependência de conexão Rest -->
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-client</artifactId>
+			<version>3.0.14.Final</version>
+		</dependency>
+		<!-- Tratamento de arquivos Json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20190722</version>
+		</dependency>
+		<!-- Dependências de conexão Fila MQ -->
+		<!-- <dependency> <groupId>javax.jms</groupId> <artifactId>jms</artifactId> <version>1.1</version> </dependency> -->
+		<dependency>
+			<groupId>com.ibm.mq</groupId>
+			<artifactId>com.ibm.mq.allclient</artifactId>
+			<version>9.0.4.0</version>
+		</dependency>
+		<!-- Fim de dependências Fila MQ -->
+		<!-- Dependências de testes automatizados -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- WebDrive para testes web online -->
+		<dependency>
+			<groupId>io.github.bonigarcia</groupId>
+			<artifactId>webdrivermanager</artifactId>
+			<version>3.7.0</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Ferramenta de teste web, web scrapper -->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>3.141.59</version>
+		</dependency>
+		<!-- Fim das dependências de teste automatizados -->
+		<!-- API para encontrar feriados nacionais -->
+		<dependency>
+			<groupId>de.jollyday</groupId>
+			<artifactId>jollyday</artifactId>
+			<version>0.5.9</version>
+		</dependency>
+		<!-- Ferramenta de teste detalhado TestNG -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.14.3</version>
+		</dependency>
+		<!-- Webdriver screenshot utility -->
+		<dependency>
+			<groupId>ru.yandex.qatools.ashot</groupId>
+			<artifactId>ashot</artifactId>
+			<version>1.5.4</version>
+		</dependency>
+		<!-- Ferramenta complementar de testes ExtentReport -->
+		<dependency>
+			<groupId>com.relevantcodes</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>2.41.2</version>
+		</dependency>
+		<!-- Ferramenta de relatórios de teste Allure -->
+		<dependency>
+			<groupId>io.qameta.allure</groupId>
+			<artifactId>allure-junit4</artifactId>
+			<version>2.13.0</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Ferramenta de integração Allure com TestNG -->
+		<dependency>
+			<groupId>io.qameta.allure</groupId>
+			<artifactId>allure-testng</artifactId>
+			<version>2.12.0</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<!-- Plugin necessário para rodar todos os testes durante o build do Maven -->
+			<!-- Plugin para rodar o Allure -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.0</version>
+				<configuration>
+					<skipTests>${skip.unit.tests}</skipTests>
+					<includes>
+						<!--Inclusão das suites de testes-->
+						<!-- <include>**/*SuiteTestReleasePrincipal.java</include>-->
+						<include>${rodarSuite}</include>
+					</includes>
+					<testFailureIgnore>false</testFailureIgnore>
+					<argLine> -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar" </argLine>
+					<properties>
+						<!-- Listener do Allure -->
+						<!-- Listener criado para comportamento automatico de testes -->
+						<property>
+							<name>listener</name>
+							<!-- -->
+							<value>io.qameta.allure.junit4.AllureJunit4</value>
+						</property>
+					</properties>
+					<systemProperties>
+						<property>
+							<name>allure.results.directory</name>
+							<value>${project.build.directory}/allure-results</value>
+						</property>
+					</systemProperties>
+					<systemPropertyVariables>
+						<environment>${servidor}</environment>
+					</systemPropertyVariables>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.aspectj</groupId>
+						<artifactId>aspectjweaver</artifactId>
+						<version>1.9.4</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.maven.surefire</groupId>
+						<artifactId>surefire-junit4</artifactId>
+						<version>2.22.0</version>
+					</dependency>
+					<dependency>
+						<groupId>log4j</groupId>
+						<artifactId>log4j</artifactId>
+						<version>1.2.17</version>
+					</dependency>	
+				<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+					<dependency>
+				    	<groupId>com.google.code.gson</groupId>
+				    	<artifactId>gson</artifactId>
+				    	<version>2.8.8</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<!-- Plugins necessários para criar um um arquivo jar com todos os testes e dependências para rodar no RQM -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>io.qameta.allure</groupId>
+				<artifactId>allure-maven</artifactId>
+				<version>2.10.0</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.7</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>3.0.0</version>
+			</plugin>
+			<!-- Fim dos plugins necessários para criar jar com testes e dependências -->
+			<!-- Plugin para definir versão do java -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<version>3.0.0</version>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>3.0.0-M3</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>3.0.0</version>
+			</plugin>
+		</plugins>
+	</reporting>
+</project>
+ 
