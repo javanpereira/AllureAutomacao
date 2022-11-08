@@ -134,10 +134,12 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.22.0</version>
 				<configuration>
+					<!--suppress UnresolvedMavenProperty -->
 					<skipTests>${skip.unit.tests}</skipTests>
 					<includes>
 						<!--Inclusão das suites de testes-->
 						<!-- <include>**/*SuiteTestReleasePrincipal.java</include>-->
+						<!--suppress UnresolvedMavenProperty -->
 						<include>${rodarSuite}</include>
 					</includes>
 					<testFailureIgnore>false</testFailureIgnore>
@@ -158,6 +160,7 @@
 						</property>
 					</systemProperties>
 					<systemPropertyVariables>
+						<!--suppress UnresolvedMavenProperty -->
 						<environment>${servidor}</environment>
 					</systemPropertyVariables>
 				</configuration>
@@ -210,7 +213,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>3.0.0</version>
+				<version>4.0.0</version>
 			</plugin>
 			<!-- Fim dos plugins necessários para criar jar com testes e dependências -->
 			<!-- Plugin para definir versão do java -->
@@ -234,7 +237,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jxr-plugin</artifactId>
-				<version>3.0.0</version>
+				<version>4.0</version>
 			</plugin>
 		</plugins>
 	</reporting>
