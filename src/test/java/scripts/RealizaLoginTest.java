@@ -75,7 +75,7 @@ public class RealizaLoginTest extends BaseWebDriver{
 	@Severity(SeverityLevel.TRIVIAL)
 	@Test
 	public void realizaLoginComSucesso() {
-		getDriver().get("http://localhost/prototype/login");
+		getDriver().get("http://localhost/prototype");
 		login.informarLogin();
 		login.informarSenha();
 		login.clicarEmBotaoLogin();
