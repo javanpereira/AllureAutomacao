@@ -13,6 +13,9 @@ import io.qameta.allure.Step;
 public class LoginPages extends BaseWebDriver{
 	private static Logger logger = Logger.getLogger(LoginPages.class);
 
+	public void acessarLink(){
+		getDriver().get("http://localhost/prototype");
+	}
 	@Step("Informar o login")
 	public void informarLogin() {
 		inseriTextoCampo("usuario","jpa",  Tempo.getTempoWait());
