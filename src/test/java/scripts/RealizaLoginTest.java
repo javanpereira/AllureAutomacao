@@ -76,6 +76,7 @@ public class RealizaLoginTest extends BaseWebDriver{
 	@Test
 	public void realizaLoginComSucesso() {
 		getDriver().get("http://localhost/prototype");
+		login.acessarLink();
 		login.informarLogin();
 		login.informarSenha();
 		login.clicarEmBotaoLogin();
